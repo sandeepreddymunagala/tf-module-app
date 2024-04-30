@@ -1,8 +1,8 @@
 ## Policy
 resource "aws_iam_policy" "policy" {
-  name        = "${var.component}-${var.env}- ssm-pm-policy"
+  name        = "${var.component}-${var.env}-ssm-pm-policy"
   path        = "/"
-  description = "${var.component}-${var.env}-ssm-pm-policy"
+  description        = "${var.component}-${var.env}-ssm-pm-policy"
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -28,7 +28,7 @@ resource "aws_iam_policy" "policy" {
 
 ## Iam Role
 resource "aws_iam_role" "role" {
-  name = "${var.component}-${var.env}- ec2-role"
+  name        = "${var.component}-${var.env}-ec2 role"
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -56,12 +56,12 @@ resource "aws_iam_role" "role" {
   }
 }
 resource "aws_iam_instance_profile" "instance_profile" {
-  name = "${var.component}-${var.env}- ec2-role"
+  name        = "${var.component}-${var.env}-ssm-pm-policy"
   role = aws_iam_role.role.name
 }
 ## Security group
 resource "aws_security_group" "sg" {
-  name = "${var.component}-${var.env}-sg"
+  name        = "${var.component}-${var.env}-sg"
   description = "${var.component}-${var.env}-sg"
   ingress {
     from_port = 0
@@ -76,7 +76,7 @@ resource "aws_security_group" "sg" {
     protocol = "-1"
   }
   tags = {
-    name = "${var.component}-${var.env}-sg"
+    name        = "${var.component}-${var.env}-sg"
   }
 }
 ## Ec2
