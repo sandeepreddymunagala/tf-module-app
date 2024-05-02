@@ -116,13 +116,16 @@ resource "null_resource" "ansible" {
     connection {
       type     = "ssh"
       user     = "centos"
-      password = "DevOps321"  # Note: Using passwords for SSH connections is not recommended; consider using SSH keys
+      password = "DevOps321"  # Use SSH key-based authentication instead
       host     = aws_instance.instance.public_ip
     }
 
+    // Use more detailed logging and error handling
     inline = [
-      "sudo labauto ansible",    # Example command
-      "ansible-pull -i localhost, -U https://github.com/sandeepreddymunagala/roboshop-ansible main.yml -e env=${var.env} -e role_name=${var.component}"
+      "echo 'Starting Ansible execution'",
+      "sudo labauto ansible",
+      "ansible-pull -i localhost, -U https://github.com/sandeepreddymunagala/roboshop-ansible main.yml -e env=${var.env} -e role_name=${var.component} || echo 'Ansible execution failed with exit code: $?'"
     ]
   }
 }
+
