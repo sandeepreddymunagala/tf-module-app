@@ -94,8 +94,13 @@ resource "aws_route53_record" "dns" {
   name    = "${var.component}-${var.env}.sandeepreddymunagala123.xyz"
   type    = "A"
   zone_id = "Z000681610YP12S51X5A5"
-  records = [aws_instance.instance.private_ip]
+  ttl     = 300  # Example TTL value (in seconds)
+
+  records = [
+    aws_instance.web.private_ip
+  ]
 }
+
 ##Null resource-ansible
 resource "null_resource" "ansible" {
   depends_on = [aws_instance.instance,aws_route53_record.dns]
