@@ -97,7 +97,7 @@ resource "aws_route53_record" "dns" {
   ttl     = 300  # Example TTL value (in seconds)
 
   records = [
-    aws_instance.web.private_ip
+    aws_instance.instance.private_ip
   ]
 }
 
