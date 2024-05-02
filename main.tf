@@ -91,7 +91,7 @@ resource "aws_instance" "instance" {
 
 ## DNS record
 resource "aws_route53_record" "dns" {
-  name    = "${var.component}-${var.env}"
+  name    = "${var.component}-${var.env}.sandeepreddymunagala123.xyz"
   type    = "A"
   zone_id = "Z000681610YP12S51X5A5"
   records = [aws_instance.instance.private_ip]
