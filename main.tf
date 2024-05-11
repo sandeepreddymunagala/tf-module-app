@@ -156,7 +156,7 @@ resource "aws_security_group" "sg" {
 }
 
   resource "aws_instance" "test" {
-    ami           = data.aws_ami.ami
+    ami           = data.aws_ami.ami.id
     instance_type = "t2.micro"
     vpc_security_group_ids = [aws_security_group.sg.id]
     subnet_id = var.subnet_id
