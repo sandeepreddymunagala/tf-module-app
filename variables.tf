@@ -3,8 +3,8 @@ variable "component" {}
 variable "tags" {
   default = {}
 }
-variable "subnets" {}
-variable "vpc_id" {}
+variable "subnet_id" {}
+/*variable "vpc_id" {}
 variable "sg_subnets_cidr" {}
 variable "app_port" {}
 variable "kms_key_id" {}
@@ -15,7 +15,7 @@ variable "min_size" {}
 variable "allow_ssh_cidr" {}
 variable "lb_dns_name" {}
 variable "listener_arn" {}
-variable "lb_rule_priority" {}
+variable "lb_rule_priority" {}*/
 //variable "kms_arn" {}
 //variable "extra_param_access" {}
 //variable "allow_prometheus_cidr" {}
