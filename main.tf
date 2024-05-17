@@ -38,20 +38,49 @@ resource "aws_security_group" "main" {
     Name = "${var.component}-${var.env}-sg"
   }
 }
-## Ec2
-resource "aws_instance" "instance" {
-  ami           = data.aws_ami.ami.id
-  instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.main.id]
-  iam_instance_profile = aws_iam_instance_profile.instance_profile.name
 
-  tags = merge({
-    Name = "${var.component}-${var.env}"
-  },var.tags)
+resource "aws_launch_template" "main" {
+  name = "${var.component}-${var.env}"
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.instance_profile.name
+  }
+  image_id               = data.aws_ami.ami.id
+  instance_type          = var.instance_type
+  vpc_security_group_ids = [aws_security_group.main.id]
+
+  tag_specifications {
+    resource_type = "instance"
+    tags          = merge({ Name = "${var.component}-${var.env}", Monitor = "true" }, var.tags)
+  }
+
+  user_data = base64encode(templatefile("${path.module}/userdata.sh", {
+    env       = var.env
+    component = var.component
+  }))
+
+  block_device_mappings {
+  device_name = "/dev/sda1"
+  ebs {
+  volume_size = 10
+  encrypted   = "true"
+  kms_key_id  = var.kms_key_id
+  }
+ }
+}
+## Ec2
+resource "aws_autoscaling_group" "main" {
+  desired_capacity = var.desired_capacity
+  max_size = var.max_size
+  min_size = var.min_size
+  launch_template {
+    id = aws_launch_template.main.id
+    version = "$latest"
+  }
 }
 
 ## DNS record
-resource "aws_route53_record" "dns" {
+/*resource "aws_route53_record" "dns" {
   name    = "${var.component}-${var.env}.sandeepreddymunagala123.xyz"
   type    = "A"
   zone_id = "Z000681610YP12S51X5A5"
@@ -60,7 +89,7 @@ resource "aws_route53_record" "dns" {
   records = [
     aws_instance.instance.private_ip
   ]
-}
+}*/
 
 
 
