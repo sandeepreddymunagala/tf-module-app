@@ -88,16 +88,14 @@ resource "aws_autoscaling_group" "main" {
 }
 
 ## DNS record
-/*resource "aws_route53_record" "dns" {
+resource "aws_route53_record" "dns" {
   name    = "${var.component}-${var.env}.sandeepreddymunagala123.xyz"
-  type    = "A"
+  type    = "CNAME"
   zone_id = "Z000681610YP12S51X5A5"
   ttl     = 300  # Example TTL value (in seconds)
 
-  records = [
-    aws_instance.instance.private_ip
-  ]
-}*/
+  records = [var.lb_dns_name  ]
+}
 
 
 
