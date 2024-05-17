@@ -14,8 +14,8 @@ variable "max_size" {}
 variable "min_size" {}
 variable "allow_ssh_cidr" {}
 variable "lb_dns_name" {}
-//variable "listener_arn" {}
-//variable "lb_rule_priority" {}
+variable "listener_arn" {}
+variable "lb_rule_priority" {}
 //variable "kms_arn" {}
 //variable "extra_param_access" {}
 //variable "allow_prometheus_cidr" {}

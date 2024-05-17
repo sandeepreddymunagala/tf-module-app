@@ -74,6 +74,22 @@ resource "aws_lb_target_group" "main" {
     unhealthy_threshold = 2
   }
 }
+
+resource "aws_lb_listener_rule" "static" {
+  listener_arn = var.listener_arn
+  priority     = var.lb_rule_priority
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+
+  condition {
+    host_header {
+      values = ["${local.dns_name}.rdevopsb73.online"]
+    }
+  }
+}
 ## Ec2
 resource "aws_autoscaling_group" "main" {
   desired_capacity = var.desired_capacity
